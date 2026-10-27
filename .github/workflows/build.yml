@@ -35,6 +35,14 @@ jobs:
               with open(path, 'w', encoding='utf-8') as f:
                   f.write(text.strip() + '\n')
 
+          w('local.properties', f'sdk.dir={os.environ["ANDROID_HOME"]}')
+
+          w('gradle.properties', '''
+          android.useAndroidX=true
+          android.enableJetifier=true
+          org.gradle.jvmargs=-Xmx2048m -Dfile.encoding=UTF-8
+          ''')
+
           w('settings.gradle', '''
           pluginManagement {
               repositories { google(); mavenCentral(); gradlePluginPortal() }
