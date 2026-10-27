@@ -16,8 +16,10 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Accept Android SDK Licenses
-        run: yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
+      - name: Install Android SDK
+        run: |
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
+          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platforms;android-34" "build-tools;34.0.0" || true
 
       - uses: gradle/actions/setup-gradle@v3
         with:
@@ -344,7 +346,7 @@ jobs:
           }
           ''')
 
-          w('app/src/main/java/ro/profitride/OfferReader.kt', '''
+          w('app/src/main/java/ro/profitride/OfferReader.kt', r'''
           package ro.profitride
 
           import android.accessibilityservice.AccessibilityService
